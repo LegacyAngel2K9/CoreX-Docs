@@ -3,75 +3,30 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
-use App\Libraries\GitHubService;
 
+/**
+ * Services Configuration file.
+ *
+ * Services are simply other classes/libraries that the system uses
+ * to do its job. This is used by CodeIgniter to allow the core of the
+ * framework to be swapped out easily without affecting the usage within
+ * the rest of your application.
+ *
+ * This file holds any application-specific services, or service overrides
+ * that you might need. An example has been included with the general
+ * method format you should use for your service methods. For more examples,
+ * see the core Services file at system/Config/Services.php.
+ */
 class Services extends BaseService
 {
-    /**
-     * Custom GitHub API Service
+    /*
+     * public static function example($getShared = true)
+     * {
+     *     if ($getShared) {
+     *         return static::getSharedInstance('example');
+     *     }
      *
-     * Fetches contributors from GitHub dynamically.
+     *     return new \CodeIgniter\Example();
+     * }
      */
-    public static function github(?bool $getShared = true)
-    {
-        if ($getShared) {
-            return static::getSharedInstance('github');
-        }
-
-        return new GitHubService();
-    }
-
-    /**
-     * Custom Security Service
-     *
-     * Handles additional security layers for requests.
-     */
-    public static function security(?bool $getShared = true)
-    {
-        if ($getShared) {
-            return static::getSharedInstance('security');
-        }
-
-        return new \CodeIgniter\Security\Security();
-    }
-
-    /**
-     * Enable CORS Handling
-     *
-     * Ensures CORS headers are applied correctly for API requests.
-     */
-    public static function cors(?bool $getShared = true)
-    {
-        if ($getShared) {
-            return static::getSharedInstance('cors');
-        }
-
-        return new \App\Libraries\CorsService();
-    }
-
-    /**
-     * Custom Throttling Service for API Rate Limiting
-     */
-    public static function throttle(?bool $getShared = true)
-    {
-        if ($getShared) {
-            return static::getSharedInstance('throttle');
-        }
-
-        return new \App\Libraries\ThrottleService();
-    }
-
-    /**
-     * Override Default Logger Service
-     *
-     * Extends logging functionality for better debugging.
-     */
-    public static function logger(?bool $getShared = true)
-    {
-        if ($getShared) {
-            return static::getSharedInstance('logger');
-        }
-
-        return new \CodeIgniter\Log\Logger(config('Logger'));
-    }
 }
