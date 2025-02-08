@@ -7,52 +7,66 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes = Services::routes();
+
 /*
 |--------------------------------------------------------------------------
 | Default Route
 |--------------------------------------------------------------------------
 */
 $routes->get('/', 'Home::index');
+
 /*
 |--------------------------------------------------------------------------
 | Documentation Routes
 |--------------------------------------------------------------------------
 */
-$routes->get('docs', 'Docs::index');
-$routes->get('docs/install', 'Docs::install');
-$routes->get('docs/config', 'Docs::config');
-$routes->get('docs/api', 'Docs::api');
-$routes->get('docs/commands', 'Docs::commands');
-$routes->get('docs/database', 'Docs::database');
+$routes->group('docs', function ($routes) {
+    $routes->get('/', 'Docs::index');
+    $routes->get('install', 'Docs::install');
+    $routes->get('config', 'Docs::config');
+    $routes->get('api', 'Docs::api');
+    $routes->get('commands', 'Docs::commands');
+    $routes->get('database', 'Docs::database');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes (Protected with Middleware)
 |--------------------------------------------------------------------------
 */
-$routes->get('admin', 'Admin::index', ['filter' => 'adminAuth']);
-$routes->get('admin/create', 'Admin::create', ['filter' => 'adminAuth']);
-$routes->post('admin/store', 'Admin::store', ['filter' => 'adminAuth']);
-$routes->get('admin/edit/(:num)', 'Admin::edit/$1', ['filter' => 'adminAuth']);
-$routes->post('admin/update/(:num)', 'Admin::update/$1', ['filter' => 'adminAuth']);
-$routes->get('admin/delete/(:num)', 'Admin::delete/$1', ['filter' => 'adminAuth']);
+$routes->group('admin', ['filter' => 'adminAuth'], function ($routes) {
+    $routes->get('/', 'Admin::index');
+    $routes->get('create', 'Admin::create');
+    $routes->post('store', 'Admin::store');
+    $routes->get('edit/(:num)', 'Admin::edit/$1');
+    $routes->post('update/(:num)', 'Admin::update/$1');
+    $routes->get('delete/(:num)', 'Admin::delete/$1');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Admin Authentication Routes
 |--------------------------------------------------------------------------
 */
-$routes->get('admin/login', 'Auth::login');
-$routes->post('admin/processLogin', 'Auth::processLogin');
-$routes->get('admin/logout', 'Auth::logout');
+$routes->group('admin', function ($routes) {
+    $routes->get('login', 'Auth::login');
+    $routes->post('processLogin', 'Auth::processLogin');
+    $routes->get('logout', 'Auth::logout');
+});
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 */
-$routes->get('api/getServerConfig', 'Config::getServerConfig');
-$routes->get('api/getTables', 'Database::getTables');
-$routes->get('api/getTableStructure/(:any)', 'Database::getTableStructure/$1');
-$routes->get('api/getTableData/(:any)', 'Database::getTableData/$1');
-$routes->get('api/contributors', 'GitHubHelper::getContributors');
+$routes->group('api', function ($routes) {
+    $routes->get('getServerConfig', 'Config::getServerConfig');
+    $routes->get('getTables', 'Database::getTables');
+    $routes->get('getTableStructure/(:any)', 'Database::getTableStructure/$1');
+    $routes->get('getTableData/(:any)', 'Database::getTableData/$1');
+    $routes->get('contributors', 'GitHubHelper::getContributors');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Custom 404 Route
@@ -61,6 +75,7 @@ $routes->get('api/contributors', 'GitHubHelper::getContributors');
 $routes->set404Override(function () {
     return view('errors/404');
 });
+
 /*
 |--------------------------------------------------------------------------
 | Auto Routing (Disabled for Security)

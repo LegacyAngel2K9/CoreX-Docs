@@ -6,7 +6,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 
-class AdminAuth implements FilterInterface
+class AdminAuthFilter implements FilterInterface
 {
     /**
      * Runs before the controller method is executed.
