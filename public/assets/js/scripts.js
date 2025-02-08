@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let deleteButtons = document.querySelectorAll(".btn-danger");
     deleteButtons.forEach(function (button) {
         button.addEventListener("click", function (event) {
-            if (!confirm("Are you sure you want to delete this documentation?")) {
+            if (!confirm("Are you sure you want to delete this documentation? This action cannot be undone.")) {
                 event.preventDefault();
             }
         });
@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         titleInput.addEventListener("input", function () {
             let slug = titleInput.value
                 .toLowerCase()
+                .trim()
                 .replace(/ /g, "-")
                 .replace(/[^a-z0-9\-]/g, "");
 
@@ -94,4 +95,19 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+});
+
+// Dark Mode Toggle
+document.addEventListener("DOMContentLoaded", function () {
+    let darkModeToggle = document.getElementById("dark-mode-toggle");
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener("click", function () {
+            document.body.classList.toggle("dark-mode");
+            localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+        });
+
+        if (localStorage.getItem("darkMode") === "true") {
+            document.body.classList.add("dark-mode");
+        }
+    }
 });

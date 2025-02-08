@@ -63,10 +63,27 @@ body {
     border-color: #bd2130;
 }
 
+.btn-warning {
+    background-color: #f8d210;
+    border-color: #f8d210;
+    color: #000;
+}
+
+.btn-warning:hover {
+    background-color: #e0c10d;
+    border-color: #d4af09;
+    color: #000;
+}
+
 /* Cards */
 .card {
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.02);
 }
 
 .card-header {

@@ -12,6 +12,7 @@
         <li>MySQL/MariaDB Database</li>
         <li>txAdmin (Recommended for easy setup)</li>
         <li>Git & Composer (For updates and dependencies)</li>
+        <li>`oxmysql` (Required for database interaction)</li>
     </ul>
 
     <hr>
@@ -51,6 +52,7 @@
     <h3>Step 2: Configure `server.cfg`</h3>
     <p>Open your `server.cfg` and add the following lines:</p>
     <pre><code>
+ensure oxmysql
 ensure [CoreX]
 ensure [StandAlone]
 ensure [Voice]
@@ -63,6 +65,8 @@ ensure [cfx-default]
     <p>Import the CoreX SQL structure into your database:</p>
     <pre><code>mysql -u root -p corex < resources/[CoreX]/CoreX/database/corex.sql</code></pre>
     <p>Ensure `oxmysql` is installed and configured properly.</p>
+
+    <p>Alternatively, if using phpMyAdmin or another database manager, manually import `corex.sql`.</p>
 
     <hr>
 

@@ -21,7 +21,7 @@
 CREATE DATABASE corex CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
     </code></pre>
 
-    <p>Then, ensure that your `server.cfg` contains the correct database connection string:</p>
+    <p>Then, ensure that your server.cfg contains the correct database connection string:</p>
     <pre><code>
 set mysql_connection_string "mysql://root:password@localhost/corex"
     </code></pre>
@@ -47,30 +47,14 @@ set mysql_connection_string "mysql://root:password@localhost/corex"
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><code>users</code></td>
-                <td>Stores player data (identifier, name, job, money, bank balance, etc.).</td>
-            </tr>
-            <tr>
-                <td><code>jobs</code></td>
-                <td>Contains job roles and salary information.</td>
-            </tr>
-            <tr>
-                <td><code>vehicles</code></td>
-                <td>Stores owned vehicles and their status.</td>
-            </tr>
-            <tr>
-                <td><code>inventory</code></td>
-                <td>Manages player inventory and item ownership.</td>
-            </tr>
-            <tr>
-                <td><code>housing</code></td>
-                <td>Stores purchased/rented houses and apartments.</td>
-            </tr>
-            <tr>
-                <td><code>economy</code></td>
-                <td>Handles transactions, bank logs, and economy tracking.</td>
-            </tr>
+            <tr><td><code>users</code></td><td>Stores player data (identifier, name, job, money, bank balance, inventory, position).</td></tr>
+            <tr><td><code>jobs</code></td><td>Contains job roles and salary information.</td></tr>
+            <tr><td><code>vehicles</code></td><td>Stores owned vehicles and their garage status.</td></tr>
+            <tr><td><code>inventory</code></td><td>Manages player inventory and item weights.</td></tr>
+            <tr><td><code>housing</code></td><td>Stores property ownership and rental agreements.</td></tr>
+            <tr><td><code>economy</code></td><td>Handles banking transactions, player salaries, and cash flow.</td></tr>
+            <tr><td><code>permissions</code></td><td>Manages Discord-based role permissions.</td></tr>
+            <tr><td><code>logs</code></td><td>Tracks admin actions, economy logs, and player transactions.</td></tr>
         </tbody>
     </table>
 

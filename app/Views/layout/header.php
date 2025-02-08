@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="CoreX Documentation - Learn how to install, configure, and use the CoreX Framework.">
     <meta name="author" content="Legacy DEV Team">
-    <meta name="keywords" content="CoreX, FiveM, Roleplay, Framework, Docs">
+    <meta name="keywords" content="CoreX, FiveM, Roleplay, Framework, Docs, API, Commands, Database">
     <title>CoreX Docs</title>
 
     <!-- Favicon -->
@@ -34,13 +34,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="<?= base_url(); ?>">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/install'); ?>">Installation</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/config'); ?>">Configuration</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/api'); ?>">API</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/commands'); ?>">Commands</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/database'); ?>">Database</a></li>
-                <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-2" href="https://discord.core-x.dev" target="_blank">Support</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= base_url(); ?>">🏠 Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/install'); ?>">📥 Installation</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/config'); ?>">⚙️ Configuration</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/api'); ?>">📡 API</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/commands'); ?>">📝 Commands</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= base_url('docs/database'); ?>">🗄️ Database</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-2" href="https://discord.core-x.dev" target="_blank">💬 Support</a></li>
             </ul>
         </div>
     </div>

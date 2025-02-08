@@ -42,18 +42,21 @@ DB_NAME=corex
     <hr>
 
     <h2>⚙️ Adjusting CoreX Settings</h2>
-    <p>Inside `resources/[CoreX]/CoreX/config.lua`, you can tweak various settings:</p>
+    <p>Inside `config.lua`, you can tweak various settings:</p>
     <pre><code>
 Config = {}
 
-Config.StartingMoney = 5000
-Config.DefaultJob = "unemployed"
+Config.General = {
+    StartingMoney = 5000,
+    DefaultJob = "unemployed",
+    MaxInventoryWeight = 100
+}
 
-Config.MaxInventoryWeight = 100
 Config.ItemWeight = {
     water = 1,
     bread = 1,
-    phone = 2
+    phone = 2,
+    health_pack = 2
 }
 
 Config.VoiceSystem = "pma-voice" -- Supported: 'pma-voice', 'mumble'
@@ -66,18 +69,33 @@ Config.VehicleKeys = true
     <h2>🚗 Vehicle Configuration</h2>
     <p>Modify vehicle handling settings in `config.lua`:</p>
     <pre><code>
-Config.FuelUsage = {
-    ["compact"] = 1.0,
-    ["sedan"] = 0.8,
-    ["suv"] = 0.6,
-    ["truck"] = 0.5
+Config.Vehicles = {
+    DefaultGarage = "Main Garage",
+    ImpoundFee = 500,
+    FuelUsage = {
+        ["compact"] = 1.0,
+        ["sedan"] = 0.8,
+        ["suv"] = 0.6,
+        ["truck"] = 0.5
+    }
+}
+    </code></pre>
+
+    <hr>
+
+    <h2>🏠 Housing Configuration</h2>
+    <p>Modify house settings in `config.lua`:</p>
+    <pre><code>
+Config.Housing = {
+    EnableInteriors = true,
+    DefaultStorageCapacity = 50
 }
     </code></pre>
 
     <hr>
 
     <h2>💼 Job System Configuration</h2>
-    <p>Define jobs in `resources/[CoreX]/CoreX/jobs.lua`:</p>
+    <p>Define jobs in `jobs.lua`:</p>
     <pre><code>
 Jobs = {
     ["police"] = {
@@ -93,6 +111,17 @@ Jobs = {
         label = "EMS",
         salary = 1800
     }
+}
+    </code></pre>
+
+    <hr>
+
+    <h2>🛡️ Admin & Permissions Configuration</h2>
+    <p>Manage admin permissions in `config.lua`:</p>
+    <pre><code>
+Config.Admin = {
+    EnableDiscordPermissions = true,
+    AdminRoles = { "Admin", "Moderator" }
 }
     </code></pre>
 
