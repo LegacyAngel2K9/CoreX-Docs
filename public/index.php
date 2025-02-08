@@ -10,11 +10,12 @@ if (!file_exists($pathsPath)) {
     echo 'Paths configuration file not found. Ensure CodeIgniter is installed correctly.';
     exit(1);
 }
+
 require $pathsPath;
 $paths = new Config\Paths();
 
-// Load Bootstrap File
-require rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
+// Load the Correct Bootstrap File for CodeIgniter 4.4+
+require APPPATH . 'Config/Boot/boot.php';
 
 // Launch Application
 $app = Config\Services::codeigniter();
