@@ -1,100 +1,107 @@
-# CoreX Documentation Site
+# 📖 CoreX-Docs 🚀  
 
-## 📌 Overview
-This is the **official documentation website** for CoreX, built using **CodeIgniter 4**.  
-It provides detailed guides on **installation, configuration, API reference, database structure, and commands**.
+## 🌍 About  
+CoreX-Docs is the **official documentation platform** for the **CoreX Framework**. It provides guides, API references, and setup instructions to help developers install, configure, and use CoreX efficiently.
 
----
-
-## 🚀 Features
-✅ **Installation Guide** - Step-by-step setup instructions  
-✅ **Configuration Reference** - Modify server settings in `config.lua`  
-✅ **Command List** - All admin & player commands  
-✅ **API Documentation** - Endpoints for integration  
-✅ **Database Structure** - Tables & schema details  
-✅ **Admin Panel** - Secure login for managing documentation  
-✅ **Markdown Editor** - Update docs easily from the dashboard  
-✅ **Search Functionality** - Quickly find documentation  
+🔗 **Live Documentation:** [docs.core-x.dev](https://docs.core-x.dev)  
+💬 **Community Support:** [discord.core-x.dev](https://discord.core-x.dev)  
+📂 **GitHub Repository:** [CoreX-Docs](https://github.com/LegacyAngel2K9/CoreX-Docs)  
 
 ---
 
-## 📥 Installation
+## 📥 Installation  
 
-### 1️⃣ Clone the Repository
-```sh
+### **1️⃣ Clone the Repository**
+```env
 git clone https://github.com/LegacyAngel2K9/CoreX-Docs.git
 cd CoreX-Docs
 ```
 
-### 2️⃣ Install Dependencies
-```sh
-composer install
-```
-
-### 3️⃣ Set Up the Database (If Needed)
-If you're using database-driven documentation, configure your `.env` file:
-```sh
-cp env .env
-```
-Then update:
+### **2️⃣ Install Dependencies**
+Ensure **Composer** is installed, then run:
 ```env
-database.default.hostname = localhost
-database.default.database = corex_docs
-database.default.username = root
-database.default.password = yourpassword
+composer install --no-dev --optimize-autoloader
 ```
 
-### 4️⃣ Set Up Admin Credentials
-In your `.env` file, add:
+### **3️⃣ Configure Environment**
+Rename `.env.example` to `.env` and update your database credentials:
 ```env
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD_HASH = "$2y$10$XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-```
-Generate a hashed password using PHP:
-```php
-echo password_hash("yourpassword", PASSWORD_BCRYPT);
+cp .env.example .env
+nano .env
 ```
 
-### 5️⃣ Start the Development Server
-```sh
+### **4️⃣ Run Migrations (if required)**
+```env
+php spark migrate
+```
+
+### **5️⃣ Start the Server**
+```env
 php spark serve
 ```
-Open **[http://localhost:8080](http://localhost:8080)** in your browser.
+Access the documentation at:  
+➡ **[http://localhost:8080](http://localhost:8080)**  
 
 ---
 
-## 🛠 Configuration
+## 🔧 Configuration  
 
-### 📌 **Modify Base URL**
-Edit `.env` and update:
-```env
-app.baseURL = 'http://your-domain.com/'
-```
-
-### 📌 **Enable Debugging (For Development)**
-```env
-app.debug = true
-```
+| Setting                | Description                           | Location |
+|------------------------|--------------------------------------|----------|
+| **Base URL**           | The website's main domain.          | `.env` → `app.baseURL` |
+| **Database**           | MySQL/MariaDB connection settings.  | `.env` → `database.default` |
+| **GitHub API Key**     | Fetches contributors dynamically.  | `.env` → `GITHUB_API_KEY` |
+| **Admin Authentication** | Secure admin panel login.      | `app/Controllers/Auth.php` |
 
 ---
 
-## 📢 Admin Panel
-- Access the **Admin Panel** at: **`/admin`**
-- Log in using your **configured credentials**
-- Manage **documentation pages** directly in the panel
+## 🛠 Features  
+
+✅ **Structured Documentation for CoreX Framework**  
+✅ **Admin Panel to Manage Documentation**  
+✅ **Secure Authentication for Admins**  
+✅ **Database-Powered Content Management**  
+✅ **Fetch Contributors Directly from GitHub API**  
+✅ **Fully Responsive UI (Mobile & Desktop)**  
 
 ---
 
-## 📝 License
-This project is licensed under the **MIT License**.  
-Feel free to **contribute, modify, or distribute** with attribution.
+## 📌 Admin Panel  
+
+To access the admin dashboard:  
+➡ **[http://localhost:8080/admin/login](http://localhost:8080/admin/login)**  
+
+Default Credentials (Change in Production):  
+- **Username:** `admin`  
+- **Password:** `securepassword`  
+
+Features:  
+✔ **Add/Edit/Delete Documentation Entries**  
+✔ **Manage Categories & API References**  
+✔ **Secure Authentication System**  
 
 ---
 
-## 🏆 Credits
+## 🔗 API Endpoints  
+
+| Endpoint | Description |
+|----------|------------|
+| `/api/getServerConfig` | Fetches server configuration details. |
+| `/api/getTables` | Lists all database tables. |
+| `/api/getTableStructure/{table}` | Fetches table schema. |
+| `/api/getTableData/{table}` | Retrieves table data (limited). |
+| `/api/contributors` | Fetches GitHub contributors dynamically. |
+
+---
+
+## 📜 License  
+CoreX-Docs is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+---
+
+## 🏆 Credits  
 Developed by **Legacy DEV Team**  
-Discord Server: [Discord Link](https://discord.gg/dayewa6xP6)  
-For questions, open an **issue** or contact the **CoreX Team**.
+🔗 **Join Our Community:** [discord.core-x.dev](https://discord.core-x.dev)  
+📖 **Live Documentation:** [docs.core-x.dev](https://docs.core-x.dev)  
 
----
-🚀 **CoreX Documentation - Making Roleplay Frameworks Easy!** 🚀
+🔥 **CoreX-Docs - The Official Guide for CoreX Framework!** 🚀  

@@ -1,132 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Structure - CoreX Docs</title>
-    <link rel="stylesheet" href="/public/css/style.css">
-</head>
-<body>
+<?= $this->include('layout/header'); ?>
 
-    <div class="docs-container">
-        <h1>CoreX Database Structure</h1>
-        <p>This page outlines the database schema used in CoreX.</p>
+<div class="container">
+    <h1 class="mt-4">CoreX Database Setup</h1>
+    <p class="lead">Learn how to set up and configure the CoreX database.</p>
 
-        <h2>Characters Table</h2>
-        <p>Stores player character details.</p>
-        <pre>
-CREATE TABLE characters (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id VARCHAR(50) NOT NULL,
+    <hr>
+
+    <h2>🛠️ Database Requirements</h2>
+    <ul>
+        <li>MySQL or MariaDB</li>
+        <li>Database management tool (phpMyAdmin, HeidiSQL, MySQL Workbench, etc.)</li>
+        <li>oxmysql resource installed on your FiveM server</li>
+    </ul>
+
+    <hr>
+
+    <h2>📌 Creating the Database</h2>
+    <p>Run the following command in your MySQL terminal or query editor to create the CoreX database:</p>
+    <pre><code>
+CREATE DATABASE corex CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+    </code></pre>
+
+    <p>Then, ensure that your `server.cfg` contains the correct database connection string:</p>
+    <pre><code>
+set mysql_connection_string "mysql://root:password@localhost/corex"
+    </code></pre>
+
+    <hr>
+
+    <h2>📥 Importing CoreX Tables</h2>
+    <p>Run the following command to import the necessary database structure:</p>
+    <pre><code>mysql -u root -p corex < resources/[CoreX]/CoreX/database/corex.sql</code></pre>
+
+    <p>Alternatively, you can manually import the SQL files using your database management tool.</p>
+
+    <hr>
+
+    <h2>📂 CoreX Database Tables</h2>
+    <p>CoreX uses several tables to store player, job, and economy data:</p>
+
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Table Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>users</code></td>
+                <td>Stores player data (identifier, name, job, money, bank balance, etc.).</td>
+            </tr>
+            <tr>
+                <td><code>jobs</code></td>
+                <td>Contains job roles and salary information.</td>
+            </tr>
+            <tr>
+                <td><code>vehicles</code></td>
+                <td>Stores owned vehicles and their status.</td>
+            </tr>
+            <tr>
+                <td><code>inventory</code></td>
+                <td>Manages player inventory and item ownership.</td>
+            </tr>
+            <tr>
+                <td><code>housing</code></td>
+                <td>Stores purchased/rented houses and apartments.</td>
+            </tr>
+            <tr>
+                <td><code>economy</code></td>
+                <td>Handles transactions, bank logs, and economy tracking.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2>🗄️ Users Table Structure</h2>
+    <p>The `users` table stores all player-related data:</p>
+    <pre><code>
+CREATE TABLE users (
+    identifier VARCHAR(255) PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    age INT NOT NULL,
-    gender ENUM('Male', 'Female') NOT NULL,
-    cash INT DEFAULT 500,
-    bank INT DEFAULT 1000,
-    inventory TEXT,
-    status ENUM('Alive', 'Dead') NOT NULL DEFAULT 'Alive'
+    money INT DEFAULT 0,
+    bank INT DEFAULT 0,
+    job VARCHAR(50) DEFAULT 'unemployed',
+    job_grade INT DEFAULT 0,
+    inventory LONGTEXT DEFAULT NULL,
+    position VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-        </pre>
+    </code></pre>
 
-        <h2>Banking Table</h2>
-        <p>Handles player banking transactions.</p>
-        <pre>
-CREATE TABLE banking (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    character_id INT NOT NULL,
-    balance INT DEFAULT 0,
-    transactions TEXT,
-    FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
-);
-        </pre>
+    <hr>
 
-        <h2>Inventory Table</h2>
-        <p>Stores player inventory items.</p>
-        <pre>
-CREATE TABLE inventory (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    character_id INT NOT NULL,
-    items TEXT NOT NULL, -- JSON format
-    max_weight INT DEFAULT 50,
-    FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
-);
-        </pre>
+    <h2>💾 Backing Up Your Database</h2>
+    <p>To back up your database, run the following command:</p>
+    <pre><code>mysqldump -u root -p corex > corex_backup.sql</code></pre>
 
-        <h2>Vehicles Table</h2>
-        <p>Tracks player-owned vehicles.</p>
-        <pre>
-CREATE TABLE vehicles (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    character_id INT NOT NULL,
-    model VARCHAR(50) NOT NULL,
-    plate VARCHAR(10) NOT NULL UNIQUE,
-    garage_location VARCHAR(50) DEFAULT 'Default Garage',
-    fuel_level INT DEFAULT 100,
-    health INT DEFAULT 1000,
-    stored BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
-);
-        </pre>
+    <p>To restore from a backup:</p>
+    <pre><code>mysql -u root -p corex < corex_backup.sql</code></pre>
 
-        <h2>Properties Table</h2>
-        <p>Stores buyable and rentable properties.</p>
-        <pre>
-CREATE TABLE properties (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    character_id INT NOT NULL,
-    address VARCHAR(100) NOT NULL,
-    rent_price INT DEFAULT 0,
-    purchase_price INT DEFAULT 0,
-    ownership ENUM('Owned', 'Rented') NOT NULL,
-    storage_capacity INT DEFAULT 50,
-    FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
-);
-        </pre>
+    <hr>
 
-        <h2>Jobs Table</h2>
-        <p>Manages available jobs.</p>
-        <pre>
-CREATE TABLE jobs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    job_name VARCHAR(100) NOT NULL UNIQUE,
-    salary INT NOT NULL DEFAULT 100
-);
-        </pre>
+    <h2>✅ Final Steps</h2>
+    <ul>
+        <li>Ensure `oxmysql` is properly installed and running.</li>
+        <li>Check that your database connection is working in `server.cfg`.</li>
+        <li>Restart your server after making database changes.</li>
+    </ul>
 
-        <h2>Player Jobs Table</h2>
-        <p>Tracks which players have which jobs.</p>
-        <pre>
-CREATE TABLE player_jobs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    character_id INT NOT NULL,
-    job_id INT NOT NULL,
-    rank VARCHAR(50) DEFAULT 'Employee',
-    FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
-    FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE
-);
-        </pre>
+    <p>Need help? Visit our <a href="https://discord.core-x.dev" target="_blank">Discord Support</a>.</p>
+</div>
 
-        <h2>Permissions Table</h2>
-        <p>Handles Discord-based role permissions.</p>
-        <pre>
-CREATE TABLE permissions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    discord_id VARCHAR(50) NOT NULL,
-    role_name VARCHAR(50) NOT NULL
-);
-        </pre>
-
-        <h2>Logs Table</h2>
-        <p>Stores admin actions and security logs.</p>
-        <pre>
-CREATE TABLE logs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    character_id INT NOT NULL,
-    action TEXT NOT NULL,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-        </pre>
-    </div>
-
-</body>
-</html>
+<?= $this->include('layout/footer'); ?>

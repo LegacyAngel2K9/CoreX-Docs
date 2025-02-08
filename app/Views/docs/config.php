@@ -1,81 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuration Guide - CoreX Docs</title>
-    <link rel="stylesheet" href="/public/css/style.css">
-</head>
-<body>
+<?= $this->include('layout/header'); ?>
 
-    <div class="docs-container">
-        <h1>CoreX Configuration Guide</h1>
-        <p>This guide provides details on configuring CoreX for your FiveM server.</p>
+<div class="container">
+    <h1 class="mt-4">CoreX Configuration Guide</h1>
+    <p class="lead">Learn how to configure CoreX to fit your server's needs.</p>
 
-        <h2>Database Configuration</h2>
-        <p>Update your database settings in <code>config.lua</code>:</p>
-        <pre>
-Config.Database = {
-    host = "localhost",
-    user = "root",
-    password = "password",
-    database = "corex"
+    <hr>
+
+    <h2>🛠️ Editing `server.cfg`</h2>
+    <p>Open your `server.cfg` file and make sure it includes the following lines:</p>
+    <pre><code>
+endpoint_add_tcp "0.0.0.0:30120"
+endpoint_add_udp "0.0.0.0:30120"
+
+sv_hostname "My CoreX Roleplay Server"
+sets sv_projectName "My CoreX RP"
+sets sv_projectDesc "A FiveM RP server using CoreX Framework"
+sv_maxClients 48
+sv_enforceGameBuild 3407
+sv_licenseKey "REPLACE_WITH_YOUR_KEY"
+
+set mysql_connection_string "mysql://root:password@localhost/corex"
+
+ensure [CoreX]
+ensure [StandAlone]
+ensure [Voice]
+ensure [cfx-default]
+    </code></pre>
+
+    <hr>
+
+    <h2>🔧 Database Configuration</h2>
+    <p>Ensure that your `.env` file is properly configured with your database credentials.</p>
+    <pre><code>
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=password
+DB_NAME=corex
+    </code></pre>
+    <p>Use `oxmysql` to manage your MySQL/MariaDB database.</p>
+
+    <hr>
+
+    <h2>⚙️ Adjusting CoreX Settings</h2>
+    <p>Inside `resources/[CoreX]/CoreX/config.lua`, you can tweak various settings:</p>
+    <pre><code>
+Config = {}
+
+Config.StartingMoney = 5000
+Config.DefaultJob = "unemployed"
+
+Config.MaxInventoryWeight = 100
+Config.ItemWeight = {
+    water = 1,
+    bread = 1,
+    phone = 2
 }
-        </pre>
 
-        <h2>Economy Settings</h2>
-        <p>Modify player starting balances and salary intervals:</p>
-        <pre>
-Config.General = {
-    startingCash = 500,
-    startingBank = 1000
+Config.VoiceSystem = "pma-voice" -- Supported: 'pma-voice', 'mumble'
+Config.FuelSystem = true
+Config.VehicleKeys = true
+    </code></pre>
+
+    <hr>
+
+    <h2>🚗 Vehicle Configuration</h2>
+    <p>Modify vehicle handling settings in `config.lua`:</p>
+    <pre><code>
+Config.FuelUsage = {
+    ["compact"] = 1.0,
+    ["sedan"] = 0.8,
+    ["suv"] = 0.6,
+    ["truck"] = 0.5
 }
+    </code></pre>
 
-Config.Jobs = {
-    salaryInterval = 15 -- Salary payout every 15 minutes
-}
-        </pre>
+    <hr>
 
-        <h2>Inventory Configuration</h2>
-        <p>Set inventory weight limits:</p>
-        <pre>
-Config.Inventory = {
-    maxWeight = 50, -- Maximum inventory weight
-    defaultWeight = {
-        water = 1,
-        bread = 1,
-        health_pack = 2
+    <h2>💼 Job System Configuration</h2>
+    <p>Define jobs in `resources/[CoreX]/CoreX/jobs.lua`:</p>
+    <pre><code>
+Jobs = {
+    ["police"] = {
+        label = "Police",
+        salary = 2000,
+        permissions = {"arrest", "fine", "jail"}
+    },
+    ["mechanic"] = {
+        label = "Mechanic",
+        salary = 1500
+    },
+    ["ems"] = {
+        label = "EMS",
+        salary = 1800
     }
 }
-        </pre>
+    </code></pre>
 
-        <h2>Vehicle Settings</h2>
-        <p>Configure garage and impound fees:</p>
-        <pre>
-Config.Vehicles = {
-    defaultGarage = "Main Garage",
-    impoundFee = 500
-}
-        </pre>
+    <hr>
 
-        <h2>Housing System</h2>
-        <p>Enable interiors and set storage capacity:</p>
-        <pre>
-Config.Housing = {
-    enableInteriors = true,
-    defaultStorageCapacity = 50
-}
-        </pre>
+    <h2>✅ Final Steps</h2>
+    <p>After making changes, restart your FiveM server to apply configurations:</p>
+    <pre><code>restart CoreX</code></pre>
 
-        <h2>Admin & Permissions</h2>
-        <p>Enable Discord role-based permissions:</p>
-        <pre>
-Config.Admin = {
-    enableDiscordPermissions = true,
-    adminRoles = { "Admin", "Moderator" }
-}
-        </pre>
-    </div>
+    <p>Need help? Join our <a href="https://discord.core-x.dev" target="_blank">Discord Support</a>.</p>
+</div>
 
-</body>
-</html>
+<?= $this->include('layout/footer'); ?>

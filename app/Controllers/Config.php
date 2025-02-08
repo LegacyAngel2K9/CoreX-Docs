@@ -2,79 +2,37 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
+use App\Controllers\BaseController;
+use CodeIgniter\HTTP\ResponseInterface;
 
-class Config extends Controller
+class Config extends BaseController
 {
+    /**
+     * Configuration Guide Page
+     */
     public function index()
     {
         return view('docs/config');
     }
 
-    public function getConfigDetails()
+    /**
+     * Fetch Server Configuration
+     * Returns JSON response with server configuration details.
+     */
+    public function getServerConfig()
     {
-        $configDetails = [
-            'title' => 'Configuration Guide',
-            'settings' => [
-                'Database' => [
-                    'description' => 'Update your MySQL credentials in config.lua.',
-                    'example' => [
-                        'host' => 'localhost',
-                        'user' => 'root',
-                        'password' => 'password',
-                        'database' => 'corex'
-                    ]
-                ],
-                'Economy' => [
-                    'description' => 'Modify starting cash, bank balance, and salaries.',
-                    'example' => [
-                        'startingCash' => 500,
-                        'startingBank' => 1000,
-                        'salaryInterval' => 15
-                    ]
-                ],
-                'Inventory' => [
-                    'description' => 'Set maximum inventory weight and default item weights.',
-                    'example' => [
-                        'maxWeight' => 50,
-                        'defaultWeight' => [
-                            'water' => 1,
-                            'bread' => 1,
-                            'health_pack' => 2
-                        ]
-                    ]
-                ],
-                'Vehicles' => [
-                    'description' => 'Configure vehicle settings including default garage and impound fees.',
-                    'example' => [
-                        'defaultGarage' => 'Main Garage',
-                        'impoundFee' => 500
-                    ]
-                ],
-                'Housing' => [
-                    'description' => 'Enable or disable interiors and adjust storage capacity.',
-                    'example' => [
-                        'enableInteriors' => true,
-                        'defaultStorageCapacity' => 50
-                    ]
-                ],
-                'Jobs' => [
-                    'description' => 'Adjust salary payout interval and default job settings.',
-                    'example' => [
-                        'salaryInterval' => 15,
-                        'defaultJob' => 'Unemployed'
-                    ]
-                ],
-                'Admin' => [
-                    'description' => 'Enable Discord role-based admin system and define allowed roles.',
-                    'example' => [
-                        'enableDiscordPermissions' => true,
-                        'adminRoles' => ['Admin', 'Moderator']
-                    ]
-                ]
-            ]
+        $config = [
+            'server_name'  => getenv('app.baseURL'),
+            'database'     => getenv('database.default.database'),
+            'db_host'      => getenv('database.default.hostname'),
+            'db_user'      => getenv('database.default.username'),
+            'db_driver'    => getenv('database.default.DBDriver'),
+            'log_level'    => getenv('app.logThreshold'),
+            'encryption'   => getenv('app.encryptionKey') ? 'Enabled' : 'Disabled',
         ];
 
-        return $this->response->setJSON($configDetails);
+        return $this->response
+            ->setStatusCode(ResponseInterface::HTTP_OK)
+            ->setJSON($config);
     }
 }

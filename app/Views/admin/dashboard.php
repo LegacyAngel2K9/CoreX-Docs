@@ -1,39 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - CoreX Docs</title>
-    <link rel="stylesheet" href="/public/css/style.css">
-</head>
-<body>
+<?= $this->include('layout/header'); ?>
 
-    <div class="admin-container">
-        <h1>Admin Dashboard</h1>
-        <a href="/admin/logout" class="logout-button">Logout</a>
+<div class="container">
+    <h1 class="mt-4">Admin Dashboard</h1>
+    <p class="lead">Manage CoreX Documentation from this panel.</p>
 
-        <h2>Manage Documentation</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($docs as $doc): ?>
+    <hr>
+
+    <div class="d-flex justify-content-between mb-3">
+        <a href="<?= base_url('admin/create'); ?>" class="btn btn-success">➕ Add New Documentation</a>
+        <a href="<?= base_url('admin/logout'); ?>" class="btn btn-danger">🚪 Logout</a>
+    </div>
+
+    <?php if (session()->getFlashdata('success')) : ?>
+        <div class="alert alert-success"><?= session()->getFlashdata('success'); ?></div>
+    <?php endif; ?>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Slug</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($docs)) : ?>
+                <?php foreach ($docs as $doc) : ?>
                     <tr>
                         <td><?= esc($doc['title']); ?></td>
+                        <td><?= esc($doc['category']); ?></td>
+                        <td><a href="<?= base_url('docs/' . esc($doc['slug'])); ?>" target="_blank"><?= esc($doc['slug']); ?></a></td>
                         <td>
-                            <a href="/admin/edit/<?= $doc['id']; ?>">Edit</a>
+                            <a href="<?= base_url('admin/edit/' . $doc['id']); ?>" class="btn btn-warning btn-sm">✏ Edit</a>
+                            <a href="<?= base_url('admin/delete/' . $doc['id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this documentation?');">🗑 Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            </tbody>
-        </table>
+            <?php else : ?>
+                <tr>
+                    <td colspan="4" class="text-center">No documentation entries found.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
 
-        <a href="/admin/create" class="button">Create New Document</a>
-    </div>
-
-</body>
-</html>
+<?= $this->include('layout/footer'); ?>

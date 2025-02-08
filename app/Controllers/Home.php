@@ -2,12 +2,12 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
+use App\Controllers\BaseController;
 
-class Home extends Controller
+class Home extends BaseController
 {
     public function index()
     {
-        return view('docs/home');
+        return view('home');
     }
 }

@@ -4,13 +4,13 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 
-class Commands extends BaseController
+class ConfigDocs extends BaseController
 {
     /**
-     * Commands Documentation Page
+     * Configuration Guide Page
      */
     public function index()
     {
-        return view('docs/commands');
+        return view('docs/config');
     }
 }

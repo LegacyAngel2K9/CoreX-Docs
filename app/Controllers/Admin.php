@@ -2,75 +2,101 @@
 
 namespace App\Controllers;
 
+use App\Controllers\BaseController;
 use App\Models\DocumentationModel;
-use CodeIgniter\Controller;
+use CodeIgniter\HTTP\ResponseInterface;
 
-class Admin extends Controller
+class Admin extends BaseController
 {
+    protected $docModel;
+
+    public function __construct()
+    {
+        $this->docModel = new DocumentationModel();
+    }
+
+    /**
+     * Admin Dashboard
+     */
     public function index()
     {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/admin/login');
-        }
-
-        $model = new DocumentationModel();
-        $data['docs'] = $model->findAll();
-
+        $data['docs'] = $this->docModel->getAllDocs();
         return view('admin/dashboard', $data);
     }
 
-    public function login()
+    /**
+     * Show Form to Add New Documentation
+     */
+    public function create()
     {
-        return view('admin/login');
+        return view('admin/create');
     }
 
-    public function authenticate()
+    /**
+     * Store New Documentation Entry
+     */
+    public function store()
     {
-        $username = $this->request->getPost('username');
-        $password = $this->request->getPost('password');
+        $validation = $this->validate([
+            'title'   => 'required|min_length[3]|max_length[255]',
+            'slug'    => 'required|alpha_dash|is_unique[documentation.slug]',
+            'content' => 'required'
+        ]);
 
-        if ($username === env('ADMIN_USERNAME') && password_verify($password, env('ADMIN_PASSWORD_HASH'))) {
-            session()->set('isLoggedIn', true);
-            return redirect()->to('/admin');
-        } else {
-            return redirect()->to('/admin/login')->with('error', 'Invalid login credentials');
+        if (!$validation) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
+
+        $this->docModel->insert([
+            'title'   => $this->request->getPost('title'),
+            'slug'    => $this->request->getPost('slug'),
+            'content' => $this->request->getPost('content'),
+            'category' => $this->request->getPost('category'),
+        ]);
+
+        return redirect()->to('/admin')->with('success', 'Documentation added successfully.');
     }
 
-    public function logout()
-    {
-        session()->destroy();
-        return redirect()->to('/admin/login');
-    }
-
+    /**
+     * Show Form to Edit Documentation
+     */
     public function edit($id)
     {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/admin/login');
-        }
-
-        $model = new DocumentationModel();
-        $data['doc'] = $model->find($id);
-
+        $data['doc'] = $this->docModel->find($id);
         return view('admin/edit', $data);
     }
 
-    public function update()
+    /**
+     * Update Documentation Entry
+     */
+    public function update($id)
     {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/admin/login');
+        $validation = $this->validate([
+            'title'   => 'required|min_length[3]|max_length[255]',
+            'slug'    => "required|alpha_dash|is_unique[documentation.slug,id,{$id}]",
+            'content' => 'required'
+        ]);
+
+        if (!$validation) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        $model = new DocumentationModel();
+        $this->docModel->update($id, [
+            'title'   => $this->request->getPost('title'),
+            'slug'    => $this->request->getPost('slug'),
+            'content' => $this->request->getPost('content'),
+            'category' => $this->request->getPost('category'),
+        ]);
 
-        $id = $this->request->getPost('id');
-        $data = [
-            'title' => $this->request->getPost('title'),
-            'content' => $this->request->getPost('content')
-        ];
+        return redirect()->to('/admin')->with('success', 'Documentation updated successfully.');
+    }
 
-        $model->update($id, $data);
-
-        return redirect()->to('/admin')->with('success', 'Documentation updated successfully');
+    /**
+     * Delete Documentation Entry
+     */
+    public function delete($id)
+    {
+        $this->docModel->delete($id);
+        return redirect()->to('/admin')->with('success', 'Documentation deleted successfully.');
     }
 }

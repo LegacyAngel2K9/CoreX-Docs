@@ -1,58 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Installation Guide - CoreX Docs</title>
-    <link rel="stylesheet" href="/public/css/style.css">
-</head>
-<body>
+<?= $this->include('layout/header'); ?>
 
-    <div class="docs-container">
-        <h1>CoreX Installation Guide</h1>
-        <p>This guide will help you install and set up CoreX on your FiveM server.</p>
+<div class="container">
+    <h1 class="mt-4">CoreX Installation Guide</h1>
+    <p class="lead">Follow these steps to install CoreX Framework on your FiveM server.</p>
 
-        <h2>Step 1: Download CoreX</h2>
-        <p>Clone the repository or download the latest release:</p>
-        <pre>
-git clone https://github.com/LegacyAngel2K9/CoreX.git
-        </pre>
+    <hr>
 
-        <h2>Step 2: Move CoreX to Your FiveM Server</h2>
-        <p>Place the extracted CoreX folder into your FiveM <code>resources</code> directory.</p>
+    <h2>🛠️ Requirements</h2>
+    <ul>
+        <li>FiveM Server (Latest Build)</li>
+        <li>MySQL/MariaDB Database</li>
+        <li>txAdmin (Recommended for easy setup)</li>
+        <li>Git & Composer (For updates and dependencies)</li>
+    </ul>
 
-        <h2>Step 3: Import the Database</h2>
-        <p>Open your database tool (e.g., phpMyAdmin, MySQL CLI) and import the <code>database/corex.sql</code> file.</p>
-        <pre>
-mysql -u root -p corex < database/corex.sql
-        </pre>
+    <hr>
 
-        <h2>Step 4: Configure CoreX</h2>
-        <p>Update the <code>config.lua</code> file in the CoreX folder with your database credentials:</p>
-        <pre>
-Config.Database = {
-    host = "localhost",
-    user = "root",
-    password = "password",
-    database = "corex"
-}
-        </pre>
+    <h2>🚀 Option 1: Install Using txAdmin Recipe (Recommended)</h2>
+    <p>If you are using **txAdmin**, you can quickly install CoreX with the pre-configured recipe.</p>
+    
+    <h3>Steps to Install via txAdmin:</h3>
+    <ol>
+        <li>Start your **FiveM server** and open **txAdmin**.</li>
+        <li>Navigate to **"Recipe Deployer"** in the txAdmin panel.</li>
+        <li>Click **"Deploy Recipe from URL"**.</li>
+        <li>Enter the following link as the **Recipe URL**:</li>
+    </ol>
+    
+    <pre><code>https://raw.githubusercontent.com/LegacyAngel2K9/CoreX-Recipe/refs/heads/main/recipe.yaml</code></pre>
 
-        <h2>Step 5: Add CoreX to Your Server.cfg</h2>
-        <p>Open your FiveM server.cfg file and add:</p>
-        <pre>
-ensure CoreX
-        </pre>
+    <ol start="5">
+        <li>Follow the on-screen instructions to complete the installation.</li>
+        <li>Once installed, restart your FiveM server.</li>
+    </ol>
+    
+    <p><strong>That’s it! 🎉 CoreX is now installed using txAdmin.</strong></p>
 
-        <h2>Step 6: Start Your Server</h2>
-        <p>Run your FiveM server and check the console for any errors.</p>
-        <pre>
-./run.sh
-        </pre>
+    <hr>
 
-        <h2>You're Done!</h2>
-        <p>Your CoreX installation is now complete. If you encounter any issues, refer to the documentation or seek support.</p>
-    </div>
+    <h2>📥 Option 2: Manual Installation</h2>
+    <p>If you prefer to install CoreX manually, follow these steps:</p>
 
-</body>
-</html>
+    <h3>Step 1: Download CoreX</h3>
+    <p>Clone the latest version of CoreX Framework:</p>
+    <pre><code>git clone https://github.com/LegacyAngel2K9/CoreX.git resources/[CoreX]/CoreX</code></pre>
+    <p>Or manually download from: <a href="https://github.com/LegacyAngel2K9/CoreX" target="_blank">GitHub Repository</a></p>
+
+    <hr>
+
+    <h3>Step 2: Configure `server.cfg`</h3>
+    <p>Open your `server.cfg` and add the following lines:</p>
+    <pre><code>
+ensure [CoreX]
+ensure [StandAlone]
+ensure [Voice]
+ensure [cfx-default]
+    </code></pre>
+
+    <hr>
+
+    <h3>Step 3: Set Up the Database</h3>
+    <p>Import the CoreX SQL structure into your database:</p>
+    <pre><code>mysql -u root -p corex < resources/[CoreX]/CoreX/database/corex.sql</code></pre>
+    <p>Ensure `oxmysql` is installed and configured properly.</p>
+
+    <hr>
+
+    <h3>Step 4: Start Your Server</h3>
+    <p>Run the following command in your FiveM server folder:</p>
+    <pre><code>bash run.sh</code></pre>
+    <p>Or if using Windows:</p>
+    <pre><code>start run.cmd</code></pre>
+
+    <hr>
+
+    <h2>✅ Installation Complete!</h2>
+    <p>Your CoreX Roleplay Server should now be running! 🎉</p>
+    <p>Need help? Join our <a href="https://discord.core-x.dev" target="_blank">Discord Support</a>.</p>
+</div>
+
+<?= $this->include('layout/footer'); ?>
