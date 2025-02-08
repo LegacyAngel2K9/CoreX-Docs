@@ -2,53 +2,46 @@
 
 namespace Config;
 
-use CodeIgniter\Config\AutoloadConfig;
+use CodeIgniter\Config\BaseConfig;
 
-class Autoload extends AutoloadConfig
+class Autoload extends BaseConfig
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Auto-Loader Configuration
-    |--------------------------------------------------------------------------
-    |
-    | The AutoloadConfig class allows you to define the locations of Namespaces,
-    | PSR-4 autoloading, classmap files, and helper functions that should be
-    | loaded automatically when CodeIgniter starts.
-    |
-    */
     /**
-     * Maps namespaces to their locations within the application.
-     * These are used when Autoloading classes using PSR-4.
+     * A list of namespaces that will be automatically loaded.
      *
      * @var array
      */
-    public array $psr4 = [
-        'App'          => APPPATH,         // The main application namespace
-        'Config'       => APPPATH . 'Config',
-        'CoreX\\Docs'  => APPPATH,         // Namespace for CoreX-Docs components
+    public $psr4 = [
+        // The default namespaces
+        'Config'      => APPPATH . 'Config',       // config folder
+        'App'         => APPPATH . 'Controllers',  // controllers folder
+        'CoreX\Docs'  => APPPATH . 'CoreX/Docs',   // custom namespace for CoreX-Docs
+        'CodeIgniter' => SYSTEMPATH . 'CodeIgniter', // core CI system
     ];
 
     /**
-     * Classmap provides a map of class names and their exact file locations.
-     * Used for files that are not PSR-4 compliant.
+     * List of files to autoload.
+     * 
+     * Files in this array will be included automatically, without the need
+     * to use the `require` or `include` statements in your code.
      *
      * @var array
      */
-    public array $classmap = [];
+    public $files = [
+        // Add any global helper files you want to load here
+        // 'app/Helpers/my_helper.php',
+    ];
 
     /**
-     * Files to be automatically loaded on every request.
-     * Used for including custom global functions, helper files, or utilities.
+     * List of class maps to autoload.
+     * 
+     * A class map allows you to map a class to a specific file path. This is 
+     * useful if you don't want to use PSR-4 autoloading.
      *
      * @var array
      */
-    public array $files = [];
-
-    /**
-     * Helper files to be automatically loaded.
-     *
-     * @var array
-     */
-    public array $helpers = ['url', 'form', 'text', 'security'];
-
+    public $classmap = [
+        // Add any class maps here
+        // 'SomeClass' => APPPATH . 'Libraries/SomeClass.php',
+    ];
 }
