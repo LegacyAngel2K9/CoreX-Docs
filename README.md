@@ -1,4 +1,3 @@
-```md
 # CoreX Documentation Site
 
 ## 📌 Overview
@@ -94,13 +93,9 @@ Feel free to **contribute, modify, or distribute** with attribution.
 
 ## 🏆 Credits
 Developed by **Legacy DEV Team**  
-Discord Server: [Discord Link](https://discord.gg/dayewa6xP6)
+Discord Server: [Discord Link](https://discord.gg/dayewa6xP6)  
 For questions, open an **issue** or contact the **CoreX Team**.
 
 ---
-🚀 **CoreX Documentation - Making Roleplay Frameworks Easy!** 🚀
-``` 
-
-This **README.md** provides a **complete setup guide**, admin panel instructions, and useful configurations.  
-
-Let me know if you need any changes! 🚀🔥
+🚀 **CoreX Documentation - Making Roleplay Frameworks Easy!** 🚀  
+This **README.md** provides a **complete setup guide**, admin panel instructions, and useful configurations.
