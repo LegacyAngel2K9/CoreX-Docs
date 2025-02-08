@@ -97,5 +97,4 @@ Discord Server: [Discord Link](https://discord.gg/dayewa6xP6)
 For questions, open an **issue** or contact the **CoreX Team**.
 
 ---
-🚀 **CoreX Documentation - Making Roleplay Frameworks Easy!** 🚀  
-This **README.md** provides a **complete setup guide**, admin panel instructions, and useful configurations.
+🚀 **CoreX Documentation - Making Roleplay Frameworks Easy!** 🚀
