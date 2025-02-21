@@ -50,4 +50,3 @@ public/uploads/*
 !public/uploads/.gitkeep
 public/assets/tmp/
 public/assets/cache/
-.env
